@@ -34,6 +34,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageItemInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ServiceInfo;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Handler;
@@ -278,7 +279,12 @@ public class BeaconService extends Service {
                 Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             try {
                 LogManager.d(TAG, "Upgrading service to foreground service with notificationId" + notificationId);
-                this.startForeground(notificationId, notification);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    this.startForeground(notificationId, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_LOCATION);
+                }
+                else {
+                    this.startForeground(notificationId, notification);
+                }
             }
             catch (SecurityException exception) {
                 // https://issuetracker.google.com/issues/294408576
