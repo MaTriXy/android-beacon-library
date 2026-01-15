@@ -1,6 +1,7 @@
-### Developent
+### 2.21.2 /2026-01-15
 
-- Fix broken setDistanceModelUpdateUrl method (#1246 David G. Young)
+- Fix broken setDistanceModelUpdateUrl method (#1246, David G. Young)
+- Fix broken staet foreground service on Android 15 (#1247, David G. Young)
 
 ### 2.21.1 / 2025-03-21
 
