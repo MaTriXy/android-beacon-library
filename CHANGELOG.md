@@ -1,3 +1,7 @@
+### Developent
+
+- Fix broken setDistanceModelUpdateUrl method (#1246 David G. Young)
+
 ### 2.21.1 / 2025-03-21
 
 - Fix default scan periods (#1230, Elican Doenyas)

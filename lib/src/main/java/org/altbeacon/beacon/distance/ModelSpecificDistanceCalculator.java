@@ -193,6 +193,11 @@ public class ModelSpecificDistanceCalculator implements DistanceCalculator {
             return;
         }
 
+        if (mRemoteUpdateUrlString == null || mRemoteUpdateUrlString.isEmpty()) {
+            LogManager.i(TAG, "No distanceModelUpdateUrl is configured.  App will use built-in database for Android distance calculations.");
+            return;
+        }
+
         new ModelSpecificDistanceUpdater(mContext, mRemoteUpdateUrlString,
                 new ModelSpecificDistanceUpdater.CompletionHandler() {
             @Override
