@@ -253,7 +253,6 @@ public class BeaconManager {
         AppliedSettings oldSettings = settings;
         this.settings = newSettings;
         Beacon.setHardwareEqualityEnforced(Boolean.TRUE.equals(this.settings.getHardwareEqualityEnforced()));
-        BeaconManager.setDistanceModelUpdateUrl(Objects.requireNonNull(settings.getDistanceModelUpdateUrl()));
 
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             if (settings.getScanPeriods().getBackgroundBetweenScanPeriodMillis() < 15*60*1000 /* 15 min */ &&
@@ -443,6 +442,11 @@ public class BeaconManager {
                 if (instance == null) {
                     sInstance = instance = new BeaconManager(context);
                     LogManager.d(TAG, "API BeaconManager constructed ");
+                    // If distance update URL sas set before singleton creation, apply it to the
+                    // singleton's settings now.
+                    if (BeaconManager.distanceModelUpdateUrl != null) {
+                        BeaconManager.setDistanceModelUpdateUrl(BeaconManager.distanceModelUpdateUrl);
+                    }
                 }
             }
         }
@@ -1700,6 +1704,10 @@ public class BeaconManager {
     @Deprecated
     public static void setDistanceModelUpdateUrl(@NonNull String url) {
         warnIfScannerNotInSameProcess();
+        if (sInstance != null) {
+            Settings settingsChange = new Settings.Builder().setDistanceModelUpdateUrl(url).build();
+            sInstance.adjustSettings(settingsChange);
+        }
         distanceModelUpdateUrl = url;
     }
 
