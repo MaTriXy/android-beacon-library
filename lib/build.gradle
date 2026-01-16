@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id("org.jetbrains.dokka") version "1.5.0"
+    id "com.vanniktech.maven.publish" version "0.35.0"
 }
 apply plugin: 'kotlin-android'
 
@@ -85,18 +86,55 @@ dependencies {
     dokkaHtmlPlugin("org.jetbrains.dokka:kotlin-as-java-plugin:1.5.0")
 }
 
+/*
 ext {
     PUBLISH_GROUP_ID = 'org.altbeacon'
     PUBLISH_VERSION = version
     PUBLISH_ARTIFACT_ID = 'android-beacon-library'
 }
+ */
 
 repositories {
     mavenCentral()
 }
+
+mavenPublishing {
+    publishToMavenCentral()
+    signAllPublications()
+
+    coordinates("org.altbeacon", "android-beacon-library", version)
+    pom {
+        name = "Android Beacon Library"
+        description = "Detects and transmits Bluetooth beacons"
+        inceptionYear = "2013"
+        url ="https://altbeacon.github.io/android-beacon-library/"
+        licenses {
+            license {
+                name = "The Apache License, Version 2.0"
+                url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+                distribution = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+            }
+        }
+        developers {
+            developer {
+                id = "davidgyoung"
+                name = "David G. Young"
+                url = "https://github.com/davidgyoung/"
+            }
+        }
+        scm {
+            url = "https://github.com/AltBeacon/android-beacon-library"
+            connection = "scm:git:git://github.com/AltBeacon/android-beacon-library.git"
+            developerConnection = "scm:git:ssh://git@github.com/AltBeacon/android-beacon-library.git"
+        }
+    }
+}
+
+/*
 if (getGradle().getStartParameter().getTaskRequests().toString().contains("release") ||
         getGradle().getStartParameter().getTaskRequests().toString().contains("mavenPublish") ||
         getGradle().getStartParameter().getTaskRequests().toString().contains("closeAndReleaseRepository")) {
     apply from: "../gradle/publish-mavencentral.gradle"
 }
+ */
 

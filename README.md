@@ -80,27 +80,28 @@ If you want to help with the open source project, contact david@radiusnetworks.c
 
 The following instructions are for project administrators.
 
-1. Prerequisites: https://getstream.io/blog/publishing-libraries-to-mavencentral-2021/ 
+1. Prerequisites: https://github.com/vanniktech/gradle-maven-publish-plugin
 
 2. Configure your  ~/.gradle/gradle.properties with:
 
-        signing.keyId=<my key id>
-        signing.password=<my passphrase>
-        signing.secretKeyRingFile=<path to exported gpg file>
-        signing.password=<my passphrase>
-        ossrhUsername=<sonotype server username>
-        ossrhPassword=<sonotype server password>
+        mavenCentralUsername=<actually the token generated on central.sonatype.com>
+        mavenCentralPassword=<the password to go with the above token>
+        signing.keyId=<my GPG signing key id>
+        signing.password=<passphrase associated with the GPG signing key>
+        signing.secretKeyRingFile=<file path on the local machine to the signing key file XXXX.gpg>
 
 3. Run the build and upload
 
         git tag <version>
         git push --tags 
-        ./gradlew release
-        ./gradlew mavenPublish # Wait 10 mins before using the next command
-        ./gradlew closeAndReleaseRepository
+        ./gradlew publishToMavenCentral
 
-4. Keep checking for a half hour or so at https://repo1.maven.org/maven2/org/altbeacon/android-beacon-library/ to see that the new release shows up.
+4. Verify you see this line, the only real indication artifact upload happened:
 
-Note:  you must have Java 17 to build the projecdt.  If that is not the version on the path, and you have Android Studio installed, you may be able to add it to the path with:
+        Skipping deployment validation!
+        
+5. Go to this URL  https://central.sonatype.com/publishing/deployments, verify you see the new release, and hit the Publish button.  Keep refeshing until it is published, or check at  https://repo1.maven.org/maven2/org/altbeacon/android-beacon-library/ to see that the new release shows up.
+
+Note:  you must have Java 17 to build the project.  If that is not the version on the path, and you have Android Studio installed, you may be able to add it to the path with:
 
 `export PATH=/Applications/Android\ Studio.app/Contents/jbr/Contents/Home/bin:$PATH`
