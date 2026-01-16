@@ -33,7 +33,6 @@ class SettingsTest {
         // This works but it is not designed for Kotlin
         beaconManager.adjustSettings(Settings.Builder().setDebug(true).setDistanceModelUpdateUrl("www.google.com").build())
         // This is the preferred usage for Kotlin
-        Settings.Defaults.distanceModelUpdateUrl
         val settings = Settings(
             debug = true,
             distanceModelUpdateUrl = "www.google.com",
@@ -54,6 +53,9 @@ class SettingsTest {
         beaconManager.activeSettings.debug // can read but not write
         Assert.assertEquals(BeaconManager.getDistanceModelUpdateUrl(), "www.google.com")
     }
+
+    @Test
+    @Throws(Exception::class)
     fun configureScheduledJobStrategyTest() {
         val context = RuntimeEnvironment.getApplication()
         val beaconManager = BeaconManager
@@ -74,6 +76,9 @@ class SettingsTest {
         )
         beaconManager.adjustSettings(settings)
     }
+
+    @Test
+    @Throws(Exception::class)
     fun configureJobServiceStrategyTest() {
         val context = RuntimeEnvironment.getApplication()
         val beaconManager = BeaconManager
@@ -94,6 +99,9 @@ class SettingsTest {
         )
         beaconManager.adjustSettings(settings)
     }
+
+    @Test
+    @Throws(Exception::class)
     fun configureBackgroundServiceStrategyTest() {
         val context = RuntimeEnvironment.getApplication()
         val beaconManager = BeaconManager
@@ -104,6 +112,8 @@ class SettingsTest {
         beaconManager.adjustSettings(settings)
     }
 
+    @Test
+    @Throws(Exception::class)
     fun configureIntentScanStrategyTest() {
         val context = RuntimeEnvironment.getApplication()
         val beaconManager = BeaconManager
