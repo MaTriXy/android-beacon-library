@@ -221,6 +221,7 @@ public class Beacon implements Parcelable, Serializable {
      * Sets the DistanceCalculator to use with this beacon
      * @param dc
      */
+    @Deprecated
     public static void setDistanceCalculator(DistanceCalculator dc) {
         sDistanceCalculator = dc;
     }
@@ -232,6 +233,7 @@ public class Beacon implements Parcelable, Serializable {
      * @deprecated get the distanceCalculatorFactory method on the Settings class
      * Gets the DistanceCalculator to use with this beacon
      */
+    @Deprecated
     public static DistanceCalculator getDistanceCalculator() {
         return sDistanceCalculator;
     }
